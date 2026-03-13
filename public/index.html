@@ -3,51 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Tra cứu chứng thư</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    .row { display: flex; align-items: center; margin-bottom: 10px; }
-    label { margin-right: 10px; }
-    input { flex: 1; padding: 5px; }
-    button { margin-right: 10px; padding: 5px 15px; }
-    .result { margin-top: 20px; border: 1px solid #ccc; padding: 15px; }
-  </style>
 </head>
 <body>
   <h1>Tra cứu chứng thư thẩm định tài sản</h1>
-  <div class="row">
-    <label for="searchId">Nhập mã chứng thư:</label>
-    <input type="text" id="searchId" placeholder="VD: CTV26010081">
-  </div>
-  <div>
-    <button onclick="resetForm()">QUAY LẠI</button>
-    <button onclick="searchDoc()">TRA CỨU</button>
-    <button onclick="window.close()">THOÁT</button>
-  </div>
-  <div id="result" class="result"></div>
+  <input type="text" id="maChungThu" placeholder="Nhập mã chứng thư">
+  <button onclick="traCuu()">Tra cứu</button>
+
+  <div id="ketQua" style="margin-top:20px;"></div>
 
   <script>
-    async function searchDoc() {
-      const id = document.getElementById('searchId').value.trim();
-      if (!id) return alert('Vui lòng nhập mã chứng thư');
-      const res = await fetch(`/api/docs/${id}`);
-      if (!res.ok) {
-        document.getElementById('result').innerHTML = '<p>Không tìm thấy chứng thư</p>';
+    async function traCuu() {
+      const id = document.getElementById('maChungThu').value.trim();
+      if (!id) {
+        alert("Vui lòng nhập mã chứng thư");
         return;
       }
-      const data = await res.json();
-      document.getElementById('result').innerHTML = `
-        <h2>Chứng thư thẩm định tài sản</h2>
-        <p><strong>Mã chứng thư:</strong> ${data.id}</p>
-        <p><strong>Ngày chứng thư:</strong> ${data.ngay}</p>
-        <p><strong>Khách hàng:</strong> ${data.ten}</p>
-        <p><strong>Kết quả:</strong> ${data.Ketqua}</p>
-        <p><strong>Tài sản:</strong> ${data.taisan}</p>
-      `;
-    }
-
-    function resetForm() {
-      document.getElementById('searchId').value = '';
-      document.getElementById('result').innerHTML = '';
+      const res = await fetch(`/docs-page/${id}`);
+      if (res.ok) {
+        const html = await res.text();
+        document.getElementById('ketQua').innerHTML = html;
+      } else {
+        document.getElementById('ketQua').innerHTML = "<p style='color:red;'>Không tìm thấy chứng thư</p>";
+      }
     }
   </script>
 </body>
