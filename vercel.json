@@ -1,8 +1,6 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/docs/(.*)", "dest": "/api/docs/$1" },
-    { "src": "/docs-page/(.*)", "dest": "/api/docs-page/$1" }
+    { "src": "/", "dest": "/index.html" }
   ]
 }

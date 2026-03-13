@@ -1,30 +1,95 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8" />
   <title>Tra cứu chứng thư</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 24px; color: #222; background:#f7f7f7; }
+    .container { max-width: 900px; margin: 0 auto; }
+    input[type="text"] { padding: 8px; width: 320px; font-size: 16px; }
+    button { padding: 8px 12px; font-size: 16px; margin-left: 8px; }
+    .card { border: 1px solid #e0e0e0; padding: 20px; margin-top: 20px; border-radius: 6px; background: #fff; }
+    h1 { margin: 0 0 12px 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    .error { color: #b00020; margin-top: 12px; }
+    .small { color: #666; font-size: 13px; margin-top: 16px; }
+  </style>
 </head>
 <body>
-  <h1>Tra cứu chứng thư thẩm định tài sản</h1>
-  <input type="text" id="maChungThu" placeholder="Nhập mã chứng thư">
-  <button onclick="traCuu()">Tra cứu</button>
+  <div class="container">
+    <h1>Tra cứu chứng thư thẩm định tài sản</h1>
 
-  <div id="ketQua" style="margin-top:20px;"></div>
+    <div>
+      <input id="maChungThu" type="text" placeholder="Nhập mã chứng thư, ví dụ: CTV26010081" />
+      <button id="btnTraCuu">Tra cứu</button>
+    </div>
+
+    <div id="ketQua"></div>
+  </div>
 
   <script>
-    async function traCuu() {
+    const btn = document.getElementById('btnTraCuu');
+    const out = document.getElementById('ketQua');
+
+    function formatCurrency(numStr) {
+      const n = Number(numStr);
+      if (Number.isNaN(n)) return numStr;
+      return n.toLocaleString('vi-VN');
+    }
+
+    btn.addEventListener('click', async () => {
+      out.innerHTML = ''; // clear
       const id = document.getElementById('maChungThu').value.trim();
       if (!id) {
-        alert("Vui lòng nhập mã chứng thư");
+        out.innerHTML = '<p class="error">Vui lòng nhập mã chứng thư.</p>';
         return;
       }
-      const res = await fetch(`/docs-page/${id}`);
-      if (res.ok) {
-        const html = await res.text();
-        document.getElementById('ketQua').innerHTML = html;
-      } else {
-        document.getElementById('ketQua').innerHTML = "<p style='color:red;'>Không tìm thấy chứng thư</p>";
+
+      try {
+        const resp = await fetch(`/api/docs/${encodeURIComponent(id)}`);
+        if (resp.ok) {
+          const data = await resp.json();
+
+          out.innerHTML = `
+            <div class="card">
+              <h1>📄 Chứng thư thẩm định tài sản</h1>
+              <p><strong>Mã chứng thư:</strong> ${escapeHtml(data.id)}</p>
+              <p><strong>Ngày chứng thư:</strong> ${escapeHtml(data.ngay)}</p>
+              <p><strong>Khách hàng:</strong> ${escapeHtml(data.ten)}</p>
+              <p><strong>Kết quả:</strong> ${formatCurrency(data.ketqua)} ₫</p>
+
+              <h3>📋 Danh sách tài sản</h3>
+              <table>
+                <thead><tr><th>STT</th><th>Hạng mục tài sản</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>${escapeHtml(data.taisan)}</td></tr>
+                </tbody>
+              </table>
+
+              <div class="small">© 2026 VNG VALUE</div>
+            </div>
+          `;
+        } else if (resp.status === 404) {
+          out.innerHTML = '<p class="error">Không tìm thấy chứng thư.</p>';
+        } else {
+          const err = await resp.json().catch(()=>null);
+          out.innerHTML = `<p class="error">Lỗi server: ${escapeHtml(err && err.error ? err.error : resp.statusText)}</p>`;
+        }
+      } catch (e) {
+        out.innerHTML = `<p class="error">Lỗi kết nối: ${escapeHtml(e.message)}</p>`;
       }
+    });
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
     }
   </script>
 </body>
