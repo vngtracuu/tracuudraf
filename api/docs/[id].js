@@ -1,8 +1,8 @@
-// api/docs/[id].js
-const path = require('path');
-const fs = require('fs');
+// api/docs/[id].js  (ESM)
+import path from 'path';
+import fs from 'fs';
 
-module.exports = (req, res) => {
+export default function handler(req, res) {
   const { id } = req.query || {};
   console.log('--- /api/docs called ---');
   console.log('req.query:', req.query);
@@ -46,4 +46,4 @@ module.exports = (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     return res.status(500).json({ error: 'Lỗi server khi đọc dữ liệu' });
   }
-};
+}
