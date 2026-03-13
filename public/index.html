@@ -15,12 +15,12 @@
       --accent-red:#c53030;
       --border:#e6e9ee;
       --text:#0f1724;
-      --max-width:920px;
+      --max-width:1100px;
       --radius:10px;
       --shadow: 0 10px 30px rgba(15,23,36,0.06);
       --label-w:120px;
-      --field-font-size:14px; /* unified font size for labels and values */
-      --field-font-weight:600; /* unified weight for labels and values */
+      --field-font-size:15px;
+      --field-font-weight:600;
     }
 
     html,body{
@@ -167,7 +167,9 @@
       padding:20px 28px 28px 28px;
     }
 
-    /* Meta: first row with code/date/name inline (all same font size & weight) */
+    /* Meta: first row with code/date/name inline (all same font size & weight)
+       Make each meta-item flex:1 so they spread evenly across the row.
+       Add larger gap and ensure values align horizontally with labels. */
     .meta{
       display:flex;
       flex-direction:column;
@@ -176,27 +178,33 @@
     }
     .meta-inline{
       display:flex;
-      gap:24px;
+      gap:32px;               /* increased gap */
       align-items:center;
-      flex-wrap:wrap;
+      flex-wrap:nowrap;       /* keep them on one line */
+      width:100%;
     }
     .meta-item{
       display:flex;
-      gap:8px;
+      gap:10px;
       align-items:center;
-      min-width:160px;
+      min-width:0;            /* allow flex to shrink */
+      flex:1;                 /* each item takes equal width */
     }
     .meta-item .label{
       color:var(--muted);
       font-size:var(--field-font-size);
       min-width:90px;
       font-weight:var(--field-font-weight);
+      white-space:nowrap;
     }
     .meta-item .value{
       font-weight:var(--field-font-weight);
       font-size:var(--field-font-size);
       color:var(--text);
       text-transform:uppercase;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
     /* Result row below (label + value inline, no box) - same font size as other fields */
@@ -205,16 +213,20 @@
       gap:12px;
       align-items:center;
       margin-top:6px;
+      justify-content:flex-start;
+      flex-wrap:wrap;
     }
     .result-row .label{
       color:var(--muted);
       font-size:var(--field-font-size);
       font-weight:var(--field-font-weight);
+      white-space:nowrap;
     }
     .result-row .value{
       font-weight:var(--field-font-weight);
       font-size:var(--field-font-size);
       color:var(--accent-green);
+      white-space:nowrap;
     }
 
     .assets{
@@ -259,16 +271,21 @@
       padding-bottom:18px;
     }
 
-    /* Responsive */
+    /* Responsive adjustments */
+    @media (max-width:1100px){
+      .meta-inline{gap:20px;}
+    }
     @media (max-width:900px){
       input[type="text"]{width:320px;max-width:60%;}
-      .meta-inline{gap:12px;}
+      .meta-inline{gap:12px;flex-wrap:wrap;}
+      .meta-item{flex-basis:45%;}
       .result-row{justify-content:flex-start;}
     }
     @media (max-width:520px){
       input[type="text"]{width:100%;max-width:100%;}
       .search-wrap{padding:0 8px;}
       .meta-inline{flex-direction:column;gap:8px;align-items:flex-start;}
+      .meta-item{flex:unset;width:100%;}
       .result-row{justify-content:flex-start;}
       .doc-title{padding:10px 18px;}
       .card-body{padding:16px 18px 18px 18px;}
