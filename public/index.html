@@ -6,41 +6,42 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root{
-      --bg:#f4f6f8;
+      --bg:#f6f7f9;
       --card:#ffffff;
       --muted:#6b7280;
-      --accent:#0b5cff; /* blue */
+      --accent:#0b5cff; /* blue for amount */
       --border:#e6e9ee;
       --text:#0f1724;
       --max-width:920px;
       --radius:10px;
       --shadow: 0 10px 30px rgba(15,23,36,0.06);
+      --label-w:150px;
     }
 
-    html,body{height:100%;margin:0;background:var(--bg);font-family: "Inter", "Helvetica Neue", Arial, sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;}
+    html,body{height:100%;margin:0;background:var(--bg);font-family:Inter, "Helvetica Neue", Arial, sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;}
     .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:36px 16px;box-sizing:border-box;}
-    
-    /* Search area centered */
+
+    /* Search centered */
     .search-wrap{width:100%;max-width:var(--max-width);display:flex;justify-content:center;margin-bottom:20px;}
     .search-card{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;}
     .search-box{display:flex;gap:10px;align-items:center;background:transparent;padding:0;width:100%;justify-content:center;}
-    input[type="text"]{width:420px;max-width:70%;padding:12px 14px;border:1px solid #e9eef6;border-radius:8px;font-size:15px;box-sizing:border-box;}
+    input[type="text"]{width:420px;max-width:70%;padding:12px 14px;border:1px solid #e9eef6;border-radius:8px;font-size:15px;box-sizing:border-box;text-transform:none;}
     input[type="text"]:focus{outline:none;box-shadow:0 6px 18px rgba(11,92,255,0.08);border-color:rgba(11,92,255,0.18);}
     .btn{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;}
     .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(11,92,255,0.12);font-weight:700;}
     .brand-small{margin-left:12px;color:var(--muted);font-weight:600;font-size:13px;}
 
-    /* Result container centered and full width */
+    /* Result container */
     .result-wrap{width:100%;max-width:var(--max-width);display:flex;justify-content:center;box-sizing:border-box;}
     .placeholder{width:100%;background:var(--card);border-radius:var(--radius);padding:40px;border:1px dashed var(--border);text-align:center;color:var(--muted);box-shadow:var(--shadow);}
 
     /* Certificate card */
     .card{width:100%;background:var(--card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);box-shadow:var(--shadow);box-sizing:border-box;}
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
     .brand{display:flex;gap:12px;align-items:center;}
     .logo{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#6b8cff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;}
     .company{font-size:14px;font-weight:800;color:var(--accent);letter-spacing:0.2px;}
-    .doc-title{text-align:center;margin:6px 0 14px;}
+    .doc-title{text-align:center;margin:6px 0 12px;}
     .doc-title h1{margin:0;font-size:20px;letter-spacing:1px;font-weight:800;text-transform:uppercase;}
     .doc-sub{color:var(--muted);font-size:13px;text-align:center;margin-top:6px;}
 
@@ -48,31 +49,42 @@
     .meta-left{flex:1;min-width:320px;}
     .meta-right{width:260px;display:flex;justify-content:flex-end;}
     .row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
-    .label{min-width:140px;color:var(--muted);font-size:13px;}
+    .label{min-width:var(--label-w);color:var(--muted);font-size:13px;}
     .value{font-weight:800;font-size:15px;color:var(--text);text-transform:uppercase;}
 
-    .result-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;border-radius:10px;border:1px solid var(--border);background:#fff;min-width:220px;}
+    .result-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border-radius:10px;border:1px solid var(--border);background:#fff;min-width:220px;}
     .result-box .label{color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:600;}
-    .result-box .amount{font-size:26px;color:var(--accent);font-weight:900;}
+    .result-box .amount{font-size:28px;color:var(--accent);font-weight:900;letter-spacing:0.4px;}
 
     .assets{margin-top:20px;}
     .assets h3{margin:0 0 10px 0;font-size:16px;}
     table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
-    th,td{padding:12px 14px;border-bottom:1px solid #f1f3f6;text-align:left;font-size:14px;}
+    th,td{padding:12px 14px;border-bottom:1px solid #f1f3f6;text-align:left;font-size:14px;vertical-align:top;}
     th{background:#fafbfc;color:var(--muted);font-weight:700;}
-    td.small{color:var(--muted);font-size:13px;}
+    td.small{color:var(--muted);font-size:13px;white-space:pre-wrap;word-break:break-word;}
 
-    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:right;}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;}
 
     /* Responsive */
     @media (max-width:900px){
       input[type="text"]{width:320px;max-width:60%;}
       .meta{flex-direction:column;}
       .meta-right{width:100%;justify-content:flex-start;}
+      .label{min-width:120px;}
     }
     @media (max-width:520px){
       input[type="text"]{width:100%;max-width:100%;}
       .search-wrap{padding:0 8px;}
+      .logo{width:48px;height:48px;font-size:18px;}
+      .doc-title h1{font-size:18px;}
+    }
+
+    /* Print friendly */
+    @media print{
+      body{background:#fff;}
+      .search-wrap{display:none;}
+      .card{box-shadow:none;border:0;padding:0;}
+      .result-wrap{padding:0;}
     }
   </style>
 </head>
@@ -127,6 +139,7 @@
     }
 
     function renderCertificate(data) {
+      // Map fields from API to display
       const code = escapeHtml(data.id || '');
       const date = escapeHtml(data.ngay || '');
       const name = escapeHtml(data.ten || '');
@@ -150,7 +163,7 @@
           </div>
 
           <div class="doc-title">
-            <h1>Chứng thư thẩm định tài sản</h1>
+            <h1>CHỨNG THƯ THẨM ĐỊNH TÀI SẢN</h1>
             <div class="doc-sub">Chứng thư thẩm định giá tài sản theo yêu cầu</div>
           </div>
 
