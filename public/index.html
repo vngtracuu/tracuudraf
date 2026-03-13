@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tra cứu chứng thư</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .row { display: flex; align-items: center; margin-bottom: 10px; }
+    label { margin-right: 10px; }
+    input { flex: 1; padding: 5px; }
+    button { margin-right: 10px; padding: 5px 15px; }
+    .result { margin-top: 20px; border: 1px solid #ccc; padding: 15px; }
+  </style>
+</head>
+<body>
+  <h1>Tra cứu chứng thư thẩm định tài sản</h1>
+  <div class="row">
+    <label for="searchId">Nhập mã chứng thư:</label>
+    <input type="text" id="searchId" placeholder="VD: CTV26010081">
+  </div>
+  <div>
+    <button onclick="resetForm()">QUAY LẠI</button>
+    <button onclick="searchDoc()">TRA CỨU</button>
+    <button onclick="window.close()">THOÁT</button>
+  </div>
+  <div id="result" class="result"></div>
+
+  <script>
+    async function searchDoc() {
+      const id = document.getElementById('searchId').value.trim();
+      if (!id) return alert('Vui lòng nhập mã chứng thư');
+      const res = await fetch(`/api/docs/${id}`);
+      if (!res.ok) {
+        document.getElementById('result').innerHTML = '<p>Không tìm thấy chứng thư</p>';
+        return;
+      }
+      const data = await res.json();
+      document.getElementById('result').innerHTML = `
+        <h2>Chứng thư thẩm định tài sản</h2>
+        <p><strong>Mã chứng thư:</strong> ${data.id}</p>
+        <p><strong>Ngày chứng thư:</strong> ${data.ngay}</p>
+        <p><strong>Khách hàng:</strong> ${data.ten}</p>
+        <p><strong>Kết quả:</strong> ${data.Ketqua}</p>
+        <p><strong>Tài sản:</strong> ${data.taisan}</p>
+      `;
+    }
+
+    function resetForm() {
+      document.getElementById('searchId').value = '';
+      document.getElementById('result').innerHTML = '';
+    }
+  </script>
+</body>
+</html>

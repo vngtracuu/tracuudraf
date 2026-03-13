@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/docs/[id].js", "use": "@vercel/node" },
+    { "src": "api/docs-page/[id].js", "use": "@vercel/node" },
+    { "src": "api/qrcode/[id].js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/docs/(.*)", "dest": "/api/docs/$1" },
+    { "src": "/docs-page/(.*)", "dest": "/api/docs-page/$1" },
+    { "src": "/qrcode/(.*)", "dest": "/api/qrcode/$1" }
+  ]
+}
