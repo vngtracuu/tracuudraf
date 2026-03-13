@@ -21,60 +21,241 @@
       --label-w:120px;
     }
 
-    html,body{height:100%;margin:0;background:var(--bg);font-family:Inter, "Helvetica Neue", Arial, sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;}
-    .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;box-sizing:border-box;gap:18px;}
+    html,body{
+      height:100%;
+      margin:0;
+      background:var(--bg);
+      font-family:Inter, "Helvetica Neue", Arial, sans-serif;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    .page{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:28px 16px;
+      box-sizing:border-box;
+      gap:18px;
+    }
 
     /* Top-left site brand (moved above search) */
-    .site-brand-wrap{width:100%;max-width:var(--max-width);display:flex;align-items:flex-start;box-sizing:border-box;}
-    .site-brand{font-weight:800;color:var(--accent-red);font-size:16px;}
+    .site-brand-wrap{
+      width:100%;
+      max-width:var(--max-width);
+      display:flex;
+      align-items:flex-start;
+      box-sizing:border-box;
+    }
+    .site-brand{
+      font-weight:800;
+      color:var(--accent-red);
+      font-size:16px;
+    }
 
     /* Search centered */
-    .search-wrap{width:100%;max-width:var(--max-width);display:flex;justify-content:center;margin-bottom:0;}
-    .search-card{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;}
-    .search-box{display:flex;gap:10px;align-items:center;background:transparent;padding:0;width:100%;justify-content:center;}
-    input[type="text"]{width:420px;max-width:70%;padding:12px 14px;border:1px solid #e9eef6;border-radius:8px;font-size:15px;box-sizing:border-box;}
-    input[type="text"]:focus{outline:none;box-shadow:0 6px 18px rgba(11,92,255,0.08);border-color:rgba(11,92,255,0.18);}
-    .btn{padding:10px 14px;border-radius:8px;border:0;background:var(--accent-blue);color:#fff;font-weight:700;cursor:pointer;}
-    .btn.secondary{background:#fff;color:var(--accent-blue);border:1px solid rgba(11,92,255,0.12);font-weight:700;}
+    .search-wrap{
+      width:100%;
+      max-width:var(--max-width);
+      display:flex;
+      justify-content:center;
+      margin-bottom:0;
+    }
+    .search-card{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+    }
+    .search-box{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      background:transparent;
+      padding:0;
+      width:100%;
+      justify-content:center;
+    }
+    input[type="text"]{
+      width:420px;
+      max-width:70%;
+      padding:12px 14px;
+      border:1px solid #e9eef6;
+      border-radius:8px;
+      font-size:15px;
+      box-sizing:border-box;
+    }
+    input[type="text"]:focus{
+      outline:none;
+      box-shadow:0 6px 18px rgba(11,92,255,0.08);
+      border-color:rgba(11,92,255,0.18);
+    }
+    .btn{
+      padding:10px 14px;
+      border-radius:8px;
+      border:0;
+      background:var(--accent-blue);
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn.secondary{
+      background:#fff;
+      color:var(--accent-blue);
+      border:1px solid rgba(11,92,255,0.12);
+      font-weight:700;
+    }
 
     /* Result container */
-    .result-wrap{width:100%;max-width:var(--max-width);display:flex;justify-content:center;box-sizing:border-box;}
-    .placeholder{width:100%;background:var(--card);border-radius:var(--radius);padding:40px;border:1px dashed var(--border);text-align:center;color:var(--muted);box-shadow:var(--shadow);}
+    .result-wrap{
+      width:100%;
+      max-width:var(--max-width);
+      display:flex;
+      justify-content:center;
+      box-sizing:border-box;
+    }
+    .placeholder{
+      width:100%;
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:40px;
+      border:1px dashed var(--border);
+      text-align:center;
+      color:var(--muted);
+      box-shadow:var(--shadow);
+    }
 
     /* Certificate card */
-    .card{width:100%;background:var(--card);border-radius:var(--radius);padding:0;border:1px solid var(--border);box-shadow:var(--shadow);box-sizing:border-box;overflow:hidden;}
-    /* Title area: left-aligned, gradient background */
+    .card{
+      width:100%;
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:0;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
+      box-sizing:border-box;
+      overflow:hidden;
+    }
+
+    /* Title area: left-aligned, gradient background, reduced height */
     .doc-title{
       background: linear-gradient(90deg, var(--accent-red) 0%, #ff8a00 100%);
       color:#fff;
-      padding:18px 28px;
+      padding:10px 28px; /* reduced vertical padding to make height smaller */
       text-align:left;
     }
-    .doc-title h1{margin:0;font-size:20px;letter-spacing:1px;font-weight:800;text-transform:uppercase;}
-    .doc-sub{color:rgba(255,255,255,0.95);font-size:13px;margin-top:6px;opacity:0.95;}
+    .doc-title h1{
+      margin:0;
+      font-size:18px; /* slightly smaller to fit reduced height */
+      letter-spacing:1px;
+      font-weight:800;
+      text-transform:uppercase;
+      line-height:1.1;
+    }
+    .doc-sub{
+      color:rgba(255,255,255,0.95);
+      font-size:12px;
+      margin-top:6px;
+      opacity:0.95;
+    }
 
-    .card-body{padding:20px 28px 28px 28px;}
+    .card-body{
+      padding:20px 28px 28px 28px;
+    }
 
-    /* Meta: first row with code/date/name inline */
-    .meta{display:flex;flex-direction:column;gap:12px;margin-top:6px;}
-    .meta-inline{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
-    .meta-item{display:flex;gap:8px;align-items:center;min-width:160px;}
-    .meta-item .label{color:var(--muted);font-size:13px;min-width:90px;}
-    .meta-item .value{font-weight:800;font-size:14px;color:var(--text);text-transform:uppercase;}
+    /* Meta: first row with code/date/name inline (all same font size) */
+    .meta{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:6px;
+    }
+    .meta-inline{
+      display:flex;
+      gap:24px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .meta-item{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      min-width:160px;
+    }
+    .meta-item .label{
+      color:var(--muted);
+      font-size:14px; /* label size */
+      min-width:90px;
+      font-weight:600;
+    }
+    .meta-item .value{
+      font-weight:700;
+      font-size:16px; /* unified size for values */
+      color:var(--text);
+      text-transform:uppercase;
+    }
 
-    /* Result row below (label + value inline, no box) */
-    .result-row{display:flex;gap:12px;align-items:center;margin-top:6px;}
-    .result-row .label{color:var(--muted);font-size:13px;font-weight:600;}
-    .result-row .value{font-weight:900;font-size:20px;color:var(--accent-green);}
+    /* Result row below (label + value inline, no box) - same font size as other fields */
+    .result-row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-top:6px;
+    }
+    .result-row .label{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:600;
+    }
+    .result-row .value{
+      font-weight:700;
+      font-size:16px; /* unified size */
+      color:var(--accent-green);
+    }
 
-    .assets{margin-top:20px;}
-    .assets h3{margin:0 0 10px 0;font-size:16px;}
-    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
-    th,td{padding:12px 14px;border-bottom:1px solid #f1f3f6;text-align:left;font-size:14px;vertical-align:top;}
-    th{background:#fafbfc;color:var(--muted);font-weight:700;}
-    td.small{color:var(--muted);font-size:13px;white-space:pre-wrap;word-break:break-word;}
+    .assets{
+      margin-top:20px;
+    }
+    .assets h3{
+      margin:0 0 10px 0;
+      font-size:16px;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:6px;
+      overflow:hidden;
+    }
+    th,td{
+      padding:12px 14px;
+      border-bottom:1px solid #f1f3f6;
+      text-align:left;
+      font-size:14px;
+      vertical-align:top;
+    }
+    th{
+      background:#fafbfc;
+      color:var(--muted);
+      font-weight:700;
+    }
+    td.small{
+      color:var(--muted);
+      font-size:13px;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
 
-    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;padding-bottom:18px;}
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      padding-bottom:18px;
+    }
 
     /* Responsive */
     @media (max-width:900px){
@@ -87,7 +268,7 @@
       .search-wrap{padding:0 8px;}
       .meta-inline{flex-direction:column;gap:8px;align-items:flex-start;}
       .result-row{justify-content:flex-start;}
-      .doc-title{padding:14px 18px;}
+      .doc-title{padding:10px 18px;}
       .card-body{padding:16px 18px 18px 18px;}
     }
 
@@ -102,9 +283,9 @@
 </head>
 <body>
   <div class="page">
-    <!-- 1. Top-left site brand in red -->
+    <!-- Top-left brand in red -->
     <div class="site-brand-wrap">
-      <div class="site-brand">VNG VALUE DRAF</div>
+      <div class="site-brand">VNG VALUE</div>
     </div>
 
     <!-- Search centered -->
@@ -155,7 +336,6 @@
     }
 
     function renderCertificate(data) {
-      // Map fields from API to display
       const code = escapeHtml(data.code || data.id || '');
       const date = escapeHtml(data.ngay || '');
       const name = escapeHtml((data.ten || '').toUpperCase());
@@ -164,14 +344,12 @@
 
       return `
         <div class="card" role="region" aria-label="Chứng thư thẩm định tài sản">
-          <!-- 2. Title with left alignment and red->orange gradient background -->
           <div class="doc-title">
             <h1>CHỨNG THƯ THẨM ĐỊNH TÀI SẢN</h1>
             <div class="doc-sub">(Đây là bản chứng thư chưa chính thức)</div>
           </div>
 
           <div class="card-body">
-            <!-- 4. First row: code, date, customer on the same line -->
             <div class="meta">
               <div class="meta-inline">
                 <div class="meta-item">
@@ -188,14 +366,12 @@
                 </div>
               </div>
 
-              <!-- 5. Result on the next line, label + value inline (no box) -->
               <div class="result-row" style="margin-top:12px;">
                 <div class="label">Kết quả thẩm định</div>
-                <div class="value value-amount" style="font-weight:900;font-size:20px;color:var(--accent-green);">${amount} ₫</div>
+                <div class="value">${amount} ₫</div>
               </div>
             </div>
 
-            <!-- 5. Assets unchanged -->
             <div class="assets">
               <h3>📋 Danh sách tài sản</h3>
               <table>
@@ -208,7 +384,7 @@
               </table>
             </div>
 
-            <footer>© 2026 VNG VALUE DRAF</footer>
+            <footer>© 2026 VNG VALUE</footer>
           </div>
         </div>
       `;
