@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     :root{
-      --bg:#f6f7f9;
+      --bg:#f4f6f8;
       --card:#ffffff;
       --muted:#6b7280;
-      --accent:#0b5cff; /* blue for amount */
+      --accent:#0b5cff;
       --border:#e6e9ee;
       --text:#0f1724;
       --max-width:920px;
@@ -25,7 +25,7 @@
     .search-wrap{width:100%;max-width:var(--max-width);display:flex;justify-content:center;margin-bottom:20px;}
     .search-card{width:100%;display:flex;align-items:center;justify-content:center;gap:12px;}
     .search-box{display:flex;gap:10px;align-items:center;background:transparent;padding:0;width:100%;justify-content:center;}
-    input[type="text"]{width:420px;max-width:70%;padding:12px 14px;border:1px solid #e9eef6;border-radius:8px;font-size:15px;box-sizing:border-box;text-transform:none;}
+    input[type="text"]{width:420px;max-width:70%;padding:12px 14px;border:1px solid #e9eef6;border-radius:8px;font-size:15px;box-sizing:border-box;}
     input[type="text"]:focus{outline:none;box-shadow:0 6px 18px rgba(11,92,255,0.08);border-color:rgba(11,92,255,0.18);}
     .btn{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:#fff;font-weight:700;cursor:pointer;}
     .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(11,92,255,0.12);font-weight:700;}
@@ -37,7 +37,7 @@
 
     /* Certificate card */
     .card{width:100%;background:var(--card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);box-shadow:var(--shadow);box-sizing:border-box;}
-    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+    .top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
     .brand{display:flex;gap:12px;align-items:center;}
     .logo{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#6b8cff);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;}
     .company{font-size:14px;font-weight:800;color:var(--accent);letter-spacing:0.2px;}
@@ -47,12 +47,12 @@
 
     .meta{display:flex;gap:20px;align-items:flex-start;justify-content:space-between;margin-top:6px;}
     .meta-left{flex:1;min-width:320px;}
-    .meta-right{width:260px;display:flex;justify-content:flex-end;}
+    .meta-right{width:300px;display:flex;justify-content:flex-end;}
     .row{display:flex;gap:8px;align-items:center;margin-bottom:8px;}
     .label{min-width:var(--label-w);color:var(--muted);font-size:13px;}
     .value{font-weight:800;font-size:15px;color:var(--text);text-transform:uppercase;}
 
-    .result-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border-radius:10px;border:1px solid var(--border);background:#fff;min-width:220px;}
+    .result-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border-radius:10px;border:1px solid var(--border);background:#fff;min-width:240px;}
     .result-box .label{color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:600;}
     .result-box .amount{font-size:28px;color:var(--accent);font-weight:900;letter-spacing:0.4px;}
 
@@ -90,7 +90,6 @@
 </head>
 <body>
   <div class="page">
-    <!-- Search centered -->
     <div class="search-wrap">
       <div class="search-card">
         <div class="search-box" role="search" aria-label="Tra cứu chứng thư">
@@ -102,7 +101,6 @@
       </div>
     </div>
 
-    <!-- Result area -->
     <div class="result-wrap" id="ketQua">
       <div class="placeholder" id="placeholder">Nhập mã chứng thư và bấm <strong>Tra cứu</strong> để xem chứng thư thẩm định tài sản</div>
     </div>
@@ -139,16 +137,15 @@
     }
 
     function renderCertificate(data) {
-      // Map fields from API to display
       const code = escapeHtml(data.id || '');
       const date = escapeHtml(data.ngay || '');
-      const name = escapeHtml(data.ten || '');
+      const name = escapeHtml((data.ten || '').toUpperCase());
       const amount = formatCurrency(data.ketqua || '');
       const asset = escapeHtml(data.taisan || '');
 
       return `
         <div class="card" role="region" aria-label="Chứng thư thẩm định tài sản">
-          <div class="header">
+          <div class="top-row">
             <div class="brand">
               <div class="logo">V</div>
               <div>
@@ -237,7 +234,6 @@
       if (e.key === 'Enter') btn.click();
     });
 
-    // Initialize
     showPlaceholder();
   </script>
 </body>
