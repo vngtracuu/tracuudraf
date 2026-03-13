@@ -12,6 +12,7 @@
       --muted:#6b7280;
       --accent-green:#0b8a00;
       --accent-blue:#0b5cff;
+      --accent-red:#c53030;
       --border:#e6e9ee;
       --text:#0f1724;
       --max-width:920px;
@@ -23,9 +24,9 @@
     html,body{height:100%;margin:0;background:var(--bg);font-family:Inter, "Helvetica Neue", Arial, sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;}
     .page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:28px 16px;box-sizing:border-box;gap:18px;}
 
-    /* Top-left site brand (moved out of search) */
+    /* Top-left site brand (moved above search) */
     .site-brand-wrap{width:100%;max-width:var(--max-width);display:flex;align-items:flex-start;box-sizing:border-box;}
-    .site-brand{font-weight:800;color:var(--accent-blue);font-size:14px;}
+    .site-brand{font-weight:800;color:var(--accent-red);font-size:16px;}
 
     /* Search centered */
     .search-wrap{width:100%;max-width:var(--max-width);display:flex;justify-content:center;margin-bottom:0;}
@@ -41,23 +42,30 @@
     .placeholder{width:100%;background:var(--card);border-radius:var(--radius);padding:40px;border:1px dashed var(--border);text-align:center;color:var(--muted);box-shadow:var(--shadow);}
 
     /* Certificate card */
-    .card{width:100%;background:var(--card);border-radius:var(--radius);padding:28px;border:1px solid var(--border);box-shadow:var(--shadow);box-sizing:border-box;}
-    .doc-title{text-align:center;margin:6px 0 12px;}
+    .card{width:100%;background:var(--card);border-radius:var(--radius);padding:0;border:1px solid var(--border);box-shadow:var(--shadow);box-sizing:border-box;overflow:hidden;}
+    /* Title area: left-aligned, gradient background */
+    .doc-title{
+      background: linear-gradient(90deg, var(--accent-red) 0%, #ff8a00 100%);
+      color:#fff;
+      padding:18px 28px;
+      text-align:left;
+    }
     .doc-title h1{margin:0;font-size:20px;letter-spacing:1px;font-weight:800;text-transform:uppercase;}
-    .doc-sub{color:var(--muted);font-size:13px;text-align:center;margin-top:6px;}
+    .doc-sub{color:rgba(255,255,255,0.95);font-size:13px;margin-top:6px;opacity:0.95;}
+
+    .card-body{padding:20px 28px 28px 28px;}
 
     /* Meta: first row with code/date/name inline */
     .meta{display:flex;flex-direction:column;gap:12px;margin-top:6px;}
-    .meta-inline{display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;}
-    .meta-item{display:flex;flex-direction:column;gap:6px;min-width:160px;}
-    .meta-item .label{color:var(--muted);font-size:12px;}
+    .meta-inline{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+    .meta-item{display:flex;gap:8px;align-items:center;min-width:160px;}
+    .meta-item .label{color:var(--muted);font-size:13px;min-width:90px;}
     .meta-item .value{font-weight:800;font-size:14px;color:var(--text);text-transform:uppercase;}
 
-    /* Result row below */
-    .result-row{display:flex;justify-content:flex-end;margin-top:6px;}
-    .result-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border-radius:10px;border:1px solid var(--border);background:#fff;min-width:260px;}
-    .result-box .label{color:var(--muted);font-size:13px;margin-bottom:6px;font-weight:600;}
-    .result-box .amount{font-size:28px;color:var(--accent-green);font-weight:900;letter-spacing:0.4px;}
+    /* Result row below (label + value inline, no box) */
+    .result-row{display:flex;gap:12px;align-items:center;margin-top:6px;}
+    .result-row .label{color:var(--muted);font-size:13px;font-weight:600;}
+    .result-row .value{font-weight:900;font-size:20px;color:var(--accent-green);}
 
     .assets{margin-top:20px;}
     .assets h3{margin:0 0 10px 0;font-size:16px;}
@@ -66,7 +74,7 @@
     th{background:#fafbfc;color:var(--muted);font-weight:700;}
     td.small{color:var(--muted);font-size:13px;white-space:pre-wrap;word-break:break-word;}
 
-    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center;padding-bottom:18px;}
 
     /* Responsive */
     @media (max-width:900px){
@@ -77,8 +85,10 @@
     @media (max-width:520px){
       input[type="text"]{width:100%;max-width:100%;}
       .search-wrap{padding:0 8px;}
-      .meta-inline{flex-direction:column;gap:8px;}
+      .meta-inline{flex-direction:column;gap:8px;align-items:flex-start;}
       .result-row{justify-content:flex-start;}
+      .doc-title{padding:14px 18px;}
+      .card-body{padding:16px 18px 18px 18px;}
     }
 
     /* Print friendly */
@@ -92,7 +102,7 @@
 </head>
 <body>
   <div class="page">
-    <!-- Top-left brand moved above search -->
+    <!-- 1. Top-left site brand in red -->
     <div class="site-brand-wrap">
       <div class="site-brand">VNG VALUE</div>
     </div>
@@ -154,51 +164,52 @@
 
       return `
         <div class="card" role="region" aria-label="Chứng thư thẩm định tài sản">
+          <!-- 2. Title with left alignment and red->orange gradient background -->
           <div class="doc-title">
             <h1>CHỨNG THƯ THẨM ĐỊNH TÀI SẢN</h1>
             <div class="doc-sub">Chứng thư thẩm định giá tài sản theo yêu cầu</div>
           </div>
 
-          <!-- First row: code, date, customer on one line -->
-          <div class="meta">
-            <div class="meta-inline">
-              <div class="meta-item">
-                <div class="label">Mã chứng thư</div>
-                <div class="value">${code}</div>
+          <div class="card-body">
+            <!-- 4. First row: code, date, customer on the same line -->
+            <div class="meta">
+              <div class="meta-inline">
+                <div class="meta-item">
+                  <div class="label">Mã chứng thư</div>
+                  <div class="value">${code}</div>
+                </div>
+                <div class="meta-item">
+                  <div class="label">Ngày chứng thư</div>
+                  <div class="value">${date}</div>
+                </div>
+                <div class="meta-item">
+                  <div class="label">Khách hàng</div>
+                  <div class="value">${name}</div>
+                </div>
               </div>
-              <div class="meta-item">
-                <div class="label">Ngày chứng thư</div>
-                <div class="value">${date}</div>
-              </div>
-              <div class="meta-item">
-                <div class="label">Khách hàng</div>
-                <div class="value">${name}</div>
-              </div>
-            </div>
 
-            <!-- Second row: result box (moved below the inline row visually) -->
-            <div class="result-row">
-              <div class="result-box" aria-live="polite">
+              <!-- 5. Result on the next line, label + value inline (no box) -->
+              <div class="result-row" style="margin-top:12px;">
                 <div class="label">Kết quả thẩm định</div>
-                <div class="amount">${amount} ₫</div>
+                <div class="value value-amount" style="font-weight:900;font-size:20px;color:var(--accent-green);">${amount} ₫</div>
               </div>
             </div>
-          </div>
 
-          <!-- Assets (unchanged) -->
-          <div class="assets">
-            <h3>📋 Danh sách tài sản</h3>
-            <table>
-              <thead>
-                <tr><th style="width:60px">STT</th><th>Hạng mục tài sản</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>1</td><td class="small">${asset}</td></tr>
-              </tbody>
-            </table>
-          </div>
+            <!-- 5. Assets unchanged -->
+            <div class="assets">
+              <h3>📋 Danh sách tài sản</h3>
+              <table>
+                <thead>
+                  <tr><th style="width:60px">STT</th><th>Hạng mục tài sản</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>1</td><td class="small">${asset}</td></tr>
+                </tbody>
+              </table>
+            </div>
 
-          <footer>© 2026 VNG VALUE</footer>
+            <footer>© 2026 VNG VALUE</footer>
+          </div>
         </div>
       `;
     }
