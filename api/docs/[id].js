@@ -1,12 +1,12 @@
-const data = require('../../data.json');
+import data from '../../data.json';
 
 export default function handler(req, res) {
   const { id } = req.query;
   const result = data.find(item => item.id === id);
 
-  if (!result) {
-    return res.status(404).json({ error: 'Không tìm thấy chứng thư' });
+  if (result) {
+    res.status(200).json(result);
+  } else {
+    res.status(404).json({ error: "Không tìm thấy chứng thư" });
   }
-
-  res.status(200).json(result);
 }
